@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>新婚之喜 · 诚挚婚礼邀请</title>
+    <!-- 高端样式CDN依赖 -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <!-- 自定义Tailwind主题配色 -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        weddingMain: '#a85668',
+                        weddingBg: '#fef2f4'
+                    },
+                    fontFamily: {
+                        chinese: ['"SimSun"', 'serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    <!-- 自定义全局工具类样式 -->
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .bg-wedding-paper {
+                background: linear-gradient(160deg, #fef5f7 0%, #fff8f9 100%);
+            }
+            .text-soft-shadow {
+                text-shadow: 1px 1px 4px rgba(168, 86, 104, 0.15);
+            }
+            .deco-line {
+                background-image: url("data:image/svg+xml,%3Csvg width='100' height='10' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0,5 Q25,0 50,5 T100,5' stroke='%23a85668' fill='none' stroke-width='1'/%3E%3C/svg%3E");
+                background-repeat: repeat-x;
+                background-size: 100px 10px;
+            }
+            .page-fade {
+                transition: all 0.8s ease-in-out;
+            }
+        }
+        html,body{
+            height: 100%;
+            overflow-x: hidden;
+        }
+    </style>
+</head>
+<body class="bg-weddingBg min-h-screen flex justify-center items-center p-2 m-0">
+    <!-- 请柬封面页 -->
+    <div id="coverPage" class="page-fade w-full max-w-lg bg-wedding-paper rounded-xl shadow-lg overflow-hidden relative">
+        <div class="min-h-[100vh] flex flex-col justify-center items-center p-8 text-weddingMain font-chinese">
+            <p class="text-lg tracking-[0.4em] mb-6 opacity-90">谨邀亲友</p>
+            <h1 class="text-[40px] font-bold my-6 text-soft-shadow">新婚之喜</h1>
+            <div class="w-40 h-[1px] bg-weddingMain opacity-60 mb-6"></div>
+            <p class="tracking-widest mb-10 text-sm">WEDDING INVITATION</p>
+            <i class="fa fa-heart text-3xl animate-pulse opacity-80"></i>
+            <button onclick="openDetail()" class="mt-12 px-10 py-3 border border-weddingMain rounded-full hover:bg-weddingMain hover:text-white transition-all duration-500 text-base">
+                开启幸福邀约
+            </button>
+        </div>
+    </div>
+ 
+    <!-- 请柬详情内页 -->
+    <div id="detailPage" class="page-fade hidden w-full max-w-lg rounded-xl shadow-lg overflow-hidden relative bg-white">
+        <div class="absolute inset-0 bg-white/90 z-0"></div>
+        <div class="min-h-[100vh] flex flex-col justify-center items-center p-8 text-weddingMain font-chinese text-center relative z-10">
+            <p class="text-lg tracking-[0.3em] mb-4">致挚爱亲友</p>
+ 
+            <h2 class="text-3xl my-5 font-bold">XXX & XXX 新婚大典</h2>
+ 
+            <div class="deco-line w-full h-4 my-5 opacity-75"></div>
+ 
+            <p class="text-lg my-3 opacity-95">公历时间：____年____月____日（周____）</p>
+            <p class="text-lg my-3 opacity-95">农历时间：____年____月____日</p>
+            <p class="text-lg my-3 opacity-95">设宴地址：________ 酒店宴会厅</p>
+            <p class="text-lg my-3 opacity-95">联系电话：________ / ________</p>
+ 
+            <div class="my-8 leading-loose text-base opacity-90">
+                承蒙时光厚爱，感恩一路相伴<br/>
+                冷暖岁岁，共赴山海<br/>
+                诚盼各位亲友莅临，见证白首之约
+            </div>
+ 
+            <div class="deco-line w-full h-4 my-5 opacity-75"></div>
+ 
+            <p class="text-sm mt-6 opacity-85">静待光临 · 共赴佳期</p>
+            <p class="text-sm mt-2 opacity-70">邀约人：新郎 & 新娘</p>
+ 
+            <button onclick="backCover()" class="mt-10 px-6 py-2 border border-weddingMain rounded-full text-sm hover:bg-weddingMain hover:text-white transition-all duration-500">
+                返回封面
+            </button>
+        </div>
+    </div>
+ 
+<script>
+    const coverPage = document.getElementById('coverPage');
+    const detailPage = document.getElementById('detailPage');
+ 
+    // 打开详情页
+    function openDetail(){
+        coverPage.classList.add('hidden');
+        detailPage.classList.remove('hidden');
+    }
+    // 返回封面
+    function backCover(){
+        detailPage.classList.add('hidden');
+        coverPage.classList.remove('hidden');
+    }
+</script>
+</body>
+</html>
