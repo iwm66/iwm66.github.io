@@ -1,113 +1,340 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>新婚之喜 · 诚挚婚礼邀请</title>
-    <!-- 高端样式CDN依赖 -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
-    <!-- 自定义Tailwind主题配色 -->
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        weddingMain: '#a85668',
-                        weddingBg: '#fef2f4'
-                    },
-                    fontFamily: {
-                        chinese: ['"SimSun"', 'serif'],
-                    },
-                }
-            }
-        }
-    </script>
-    <!-- 自定义全局工具类样式 -->
-    <style type="text/tailwindcss">
-        @layer utilities {
-            .bg-wedding-paper {
-                background: linear-gradient(160deg, #fef5f7 0%, #fff8f9 100%);
-            }
-            .text-soft-shadow {
-                text-shadow: 1px 1px 4px rgba(168, 86, 104, 0.15);
-            }
-            .deco-line {
-                background-image: url("data:image/svg+xml,%3Csvg width='100' height='10' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0,5 Q25,0 50,5 T100,5' stroke='%23a85668' fill='none' stroke-width='1'/%3E%3C/svg%3E");
-                background-repeat: repeat-x;
-                background-size: 100px 10px;
-            }
-            .page-fade {
-                transition: all 0.8s ease-in-out;
-            }
-        }
-        html,body{
-            height: 100%;
-            overflow-x: hidden;
-        }
-    </style>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>热心小王的网页</title>
+<style>
+  :root {
+    --pink: #ff7eb3;
+    --orange: #ff758c;
+    --yellow: #ffb86c;
+    --purple: #8a5cff;
+    --glass: rgba(255, 255, 255, 0.16);
+    --glass-border: rgba(255, 255, 255, 0.35);
+    --text: #2b1840;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    min-height: 100vh;
+    font-family: "PingFang SC", "Microsoft YaHei", system-ui, sans-serif;
+    color: var(--text);
+    background: linear-gradient(120deg, #ffe0ec, #ffd6a5, #e0c3fc, #8ec5fc);
+    background-size: 300% 300%;
+    animation: bgMove 18s ease infinite;
+    overflow-x: hidden;
+    position: relative;
+  }
+
+  @keyframes bgMove {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+
+  /* 背景流动光斑 */
+  .blob {
+    position: fixed;
+    border-radius: 50%;
+    filter: blur(60px);
+    opacity: 0.55;
+    z-index: 0;
+    pointer-events: none;
+    animation: float 12s ease-in-out infinite alternate;
+  }
+  .blob.b1 { width: 360px; height: 360px; background: var(--pink); top: -80px; left: -60px; }
+  .blob.b2 { width: 300px; height: 300px; background: var(--purple); bottom: -60px; right: -40px; animation-delay: 2s; }
+  .blob.b3 { width: 260px; height: 260px; background: var(--yellow); top: 40%; left: 55%; animation-delay: 4s; }
+
+  @keyframes float {
+    from { transform: translate(0, 0) scale(1); }
+    to { transform: translate(40px, -30px) scale(1.15); }
+  }
+
+  .wrap {
+    position: relative;
+    z-index: 1;
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: 80px 24px 120px;
+  }
+
+  /* 顶部英雄区 */
+  .hero {
+    text-align: center;
+    margin-bottom: 64px;
+  }
+
+  .avatar {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    margin: 0 auto 20px;
+    display: grid;
+    place-items: center;
+    font-size: 60px;
+    background: linear-gradient(135deg, var(--pink), var(--orange));
+    box-shadow: 0 20px 50px rgba(255, 117, 140, 0.45);
+    animation: pop 1s cubic-bezier(.34,1.56,.64,1) both;
+  }
+
+  @keyframes pop {
+    0% { transform: scale(0.4); opacity: 0; }
+    100% { transform: scale(1); opacity: 1; }
+  }
+
+  .hero h1 {
+    font-size: clamp(32px, 6vw, 56px);
+    line-height: 1.1;
+    animation: slideUp 0.8s ease both;
+  }
+
+  .hero h1 span {
+    background: linear-gradient(90deg, var(--orange), var(--purple));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .hero p {
+    margin-top: 16px;
+    font-size: 18px;
+    opacity: 0.85;
+    animation: slideUp 0.8s ease 0.15s both;
+  }
+
+  .tag-row {
+    margin-top: 24px;
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    flex-wrap: wrap;
+    animation: slideUp 0.8s ease 0.3s both;
+  }
+
+  .tag {
+    padding: 8px 16px;
+    border-radius: 999px;
+    background: var(--glass);
+    border: 1px solid var(--glass-border);
+    backdrop-filter: blur(10px);
+    font-size: 14px;
+    font-weight: 600;
+  }
+
+  @keyframes slideUp {
+    from { transform: translateY(30px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+  }
+
+  /* 卡片网格 */
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 24px;
+  }
+
+  .card {
+    position: relative;
+    padding: 28px;
+    border-radius: 22px;
+    background: var(--glass);
+    border: 1px solid var(--glass-border);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    box-shadow: 0 20px 50px rgba(80, 40, 120, 0.18);
+    overflow: hidden;
+    transition: transform 0.4s cubic-bezier(.34,1.56,.64,1), box-shadow 0.4s ease;
+    opacity: 0;
+    transform: translateY(40px);
+  }
+
+  .card.show {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .card:hover {
+    transform: translateY(-10px) scale(1.02);
+    box-shadow: 0 30px 70px rgba(255, 117, 140, 0.35);
+  }
+
+  /* 卡片高光扫过 */
+  .card::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -120%;
+    width: 60%;
+    height: 100%;
+    background: linear-gradient(120deg, transparent, rgba(255,255,255,0.45), transparent);
+    transform: skewX(-20deg);
+  }
+  .card:hover::after {
+    animation: shimmer 0.9s ease;
+  }
+  @keyframes shimmer {
+    to { left: 140%; }
+  }
+
+  .card .emoji {
+    font-size: 40px;
+    margin-bottom: 12px;
+    display: inline-block;
+    transition: transform 0.4s ease;
+  }
+  .card:hover .emoji {
+    transform: rotate(-8deg) scale(1.15);
+  }
+
+  .card h3 {
+    font-size: 20px;
+    margin-bottom: 8px;
+  }
+  .card p {
+    font-size: 15px;
+    line-height: 1.6;
+    opacity: 0.85;
+  }
+
+  /* 按钮 */
+  .btn {
+    margin-top: 48px;
+    display: inline-flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .btn a {
+    text-decoration: none;
+    padding: 14px 28px;
+    border-radius: 999px;
+    font-weight: 700;
+    color: #fff;
+    background: linear-gradient(135deg, var(--orange), var(--purple));
+    box-shadow: 0 16px 36px rgba(138, 92, 255, 0.4);
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+  }
+  .btn a:hover {
+    transform: translateY(-4px) scale(1.04);
+    box-shadow: 0 22px 48px rgba(255, 117, 140, 0.5);
+  }
+
+  /* 底部 */
+  footer {
+    text-align: center;
+    margin-top: 80px;
+    font-size: 14px;
+    opacity: 0.7;
+  }
+
+  /* 点击爱心 */
+  .heart {
+    position: fixed;
+    font-size: 22px;
+    pointer-events: none;
+    animation: rise 1s ease-out forwards;
+    z-index: 99;
+  }
+  @keyframes rise {
+    0% { transform: translateY(0) scale(1); opacity: 1; }
+    100% { transform: translateY(-120px) scale(1.6); opacity: 0; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { animation: none !important; transition: none !important; }
+    .card { opacity: 1; transform: none; }
+  }
+</style>
 </head>
-<body class="bg-weddingBg min-h-screen flex justify-center items-center p-2 m-0">
-    <!-- 请柬封面页 -->
-    <div id="coverPage" class="page-fade w-full max-w-lg bg-wedding-paper rounded-xl shadow-lg overflow-hidden relative">
-        <div class="min-h-[100vh] flex flex-col justify-center items-center p-8 text-weddingMain font-chinese">
-            <p class="text-lg tracking-[0.4em] mb-6 opacity-90">谨邀亲友</p>
-            <h1 class="text-[40px] font-bold my-6 text-soft-shadow">新婚之喜</h1>
-            <div class="w-40 h-[1px] bg-weddingMain opacity-60 mb-6"></div>
-            <p class="tracking-widest mb-10 text-sm">WEDDING INVITATION</p>
-            <i class="fa fa-heart text-3xl animate-pulse opacity-80"></i>
-            <button onclick="openDetail()" class="mt-12 px-10 py-3 border border-weddingMain rounded-full hover:bg-weddingMain hover:text-white transition-all duration-500 text-base">
-                开启幸福邀约
-            </button>
-        </div>
+<body>
+
+  <div class="blob b1"></div>
+  <div class="blob b2"></div>
+  <div class="blob b3"></div>
+
+  <div class="wrap">
+    <section class="hero">
+      <div class="avatar">🤗</div>
+      <h1>你好，我是<span>热心小王</span></h1>
+      <p>帮同事修电脑、给邻居送快递、替朋友想文案——小事见真心 ✨</p>
+      <div class="tag-row">
+        <div class="tag">🧑‍💻 爱折腾</div>
+        <div class="tag">🍜 请客达人</div>
+        <div class="tag">📣 社区小喇叭</div>
+        <div class="tag">🌱 乐于助人</div>
+      </div>
+    </section>
+
+    <section class="grid">
+      <div class="card">
+        <span class="emoji">🛠️</span>
+        <h3>随手帮忙</h3>
+        <p>电脑卡了、Wi-Fi 断了、PPT 不会做？喊一声小王就行。</p>
+      </div>
+
+      <div class="card">
+        <span class="emoji">🎁</span>
+        <h3>人情味拉满</h3>
+        <p>节日小礼物、加班宵夜、下雨借伞，细节里都是温柔。</p>
+      </div>
+
+      <div class="card">
+        <span class="emoji">📢</span>
+        <h3>社区联络员</h3>
+        <p>通知、拼单、活动、失物招领，消息比群公告还快。</p>
+      </div>
+
+      <div class="card">
+        <span class="emoji">☕</span>
+        <h3>治愈系聊天</h3>
+        <p>烦了、累了、想吐槽，小王陪你从天黑聊到星星出来。</p>
+      </div>
+    </section>
+
+    <div class="btn">
+      <a href="javascript:void(0)" onclick="sayHi()">跟小王打个招呼 👋</a>
+      <a href="javascript:void(0)" onclick="helpSomeone()">我也想帮别人 💛</a>
     </div>
- 
-    <!-- 请柬详情内页 -->
-    <div id="detailPage" class="page-fade hidden w-full max-w-lg rounded-xl shadow-lg overflow-hidden relative bg-white">
-        <div class="absolute inset-0 bg-white/90 z-0"></div>
-        <div class="min-h-[100vh] flex flex-col justify-center items-center p-8 text-weddingMain font-chinese text-center relative z-10">
-            <p class="text-lg tracking-[0.3em] mb-4">致挚爱亲友</p>
- 
-            <h2 class="text-3xl my-5 font-bold">XXX & XXX 新婚大典</h2>
- 
-            <div class="deco-line w-full h-4 my-5 opacity-75"></div>
- 
-            <p class="text-lg my-3 opacity-95">公历时间：____年____月____日（周____）</p>
-            <p class="text-lg my-3 opacity-95">农历时间：____年____月____日</p>
-            <p class="text-lg my-3 opacity-95">设宴地址：________ 酒店宴会厅</p>
-            <p class="text-lg my-3 opacity-95">联系电话：________ / ________</p>
- 
-            <div class="my-8 leading-loose text-base opacity-90">
-                承蒙时光厚爱，感恩一路相伴<br/>
-                冷暖岁岁，共赴山海<br/>
-                诚盼各位亲友莅临，见证白首之约
-            </div>
- 
-            <div class="deco-line w-full h-4 my-5 opacity-75"></div>
- 
-            <p class="text-sm mt-6 opacity-85">静待光临 · 共赴佳期</p>
-            <p class="text-sm mt-2 opacity-70">邀约人：新郎 & 新娘</p>
- 
-            <button onclick="backCover()" class="mt-10 px-6 py-2 border border-weddingMain rounded-full text-sm hover:bg-weddingMain hover:text-white transition-all duration-500">
-                返回封面
-            </button>
-        </div>
-    </div>
- 
+
+    <footer>用一点点热心的代码，做成一点点温暖的网页 · 热心小王 © 2026</footer>
+  </div>
+
 <script>
-    const coverPage = document.getElementById('coverPage');
-    const detailPage = document.getElementById('detailPage');
- 
-    // 打开详情页
-    function openDetail(){
-        coverPage.classList.add('hidden');
-        detailPage.classList.remove('hidden');
-    }
-    // 返回封面
-    function backCover(){
-        detailPage.classList.add('hidden');
-        coverPage.classList.remove('hidden');
-    }
+  // 滚动出现
+  const cards = document.querySelectorAll('.card');
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach((e, i) => {
+      if (e.isIntersecting) {
+        setTimeout(() => e.target.classList.add('show'), i * 120);
+        io.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.2 });
+
+  cards.forEach(c => io.observe(c));
+
+  // 点击撒爱心
+  document.addEventListener('click', (ev) => {
+    const heart = document.createElement('div');
+    heart.className = 'heart';
+    heart.textContent = ['❤️','✨','🤗','🌟','💛'][Math.floor(Math.random()*5)];
+    heart.style.left = ev.clientX + 'px';
+    heart.style.top = ev.clientY + 'px';
+    document.body.appendChild(heart);
+    setTimeout(() => heart.remove(), 1000);
+  });
+
+  function sayHi() {
+    alert('小王：嗨～今天也要开开心心哦！🤗');
+  }
+
+  function helpSomeone() {
+    alert('小王：太棒啦！从给路人指路开始就好 💛');
+  }
 </script>
 </body>
 </html>
